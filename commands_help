@@ -1,0 +1,129 @@
+Reference:
+http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/
+
+
+CREATE DIRECTORY FOR MONGO SERVER:
+======================================
+C:>cd \
+C:>move C:\mongodb-win32-* C:\mongodata
+
+
+CREATE FOLDER FOR DATA
+========================
+C:>md C:\mongodata
+C:>md C:\mongodata\db
+
+
+START MONGO DB
+===============
+C:>cd mongodb\bin\mongod.exe
+
+
+REPAIR DATABASE: (IF YOUR PAGES HANGS/UNKNOWN ERROR FOUND & IT WILL CLOSE ALL OPENED DATA FILES FIRST) 
+===============================
+C:\mongodb\bin>mongod --repair
+
+and restart apache as well 
+and delete "mongod.lock" from database folder if required
+
+
+CREATE LOGS AND CONFIGURATION
+===============================
+C:\mongodb\>md log
+echo logpath=C:\mongodb\log\mongo.log > C:\mongodb\mongod.cfg
+
+
+INSTALL AND RUN SERVICES WITH NEW LOG FILE
+============================================
+C:\mongodb\bin\mongod.exe --config C:\mongodb\mongod.cfg --install
+
+
+SET DB PATH (if required else will grab default)
+=================================
+C:\mongodb\bin\mongod.exe --dbpath C:\mongodata\db
+
+
+START MONGO DB SERVER:
+================
+c:\monogodb>mongod
+
+
+IMPORT DATABASE (collection=db table name, db=database, username="db user name" password="db password")
+====================
+mongoimport --host localhost --db testdb --collection zipcodes --file D:\web\site\zips.json
+
+
+EXPORT DATABASE
+====================
+mongoexport --db testdb --collection zipcodes --out D:\web\site\backup-zips.json
+
+
+===============
+MONGO SHELL
+=======================================================================
+
+MONGO SHELL START
+=================
+c:\monogodb>mongo
+
+MONGO SHELL STOP 
+================
+> exit
+
+SHOW ALL DATABASES 
+================
+> show dbs
+
+USE DATABASE 
+================
+> use test
+
+SAVE DB USER NAME (if required)
+======================================
+> db.users.save( {username:"shadman"} )
+
+CREATE AND SELECT NEW DB
+===========================
+> use testnewdb (it creates and store in session)
+
+VIEW YOUR CURRENT DATABASE SESSION
+===========================
+> db
+
+DROP DB by 
+=============
+> db.dropDatabase()
+
+CREATE 2 DOCUMENTS
+===================
+j = {name:"testmongo"}
+k = {x:3}
+
+CREATE COLLECTION AND INTEREST
+==============================
+db.users.insert(j)
+db.users.insert(k)
+
+SHOW INSERTED COLLECTION RECORDS
+================================
+show collections
+
+SEARCH RECORDS FROM COLLECTION
+==============================
+db.users.find()
+
+INSERT RECORDS MULTIPLE COLUMNS
+======================================
+db.users.insert( { x : 4 , j : i } )
+
+INSERT MULTIPLE RECORDS BY FOR LOOP
+======================================
+for (var i = 1; i <= 20; i++) db.users.insert( { x : 4 , j : i } )
+
+PRINT ALL RECORDS  BY FOR LOOPS
+============================
+while ( c.hasNext() ) printjson( c.next() )
+
+FIND RECORDS
+=============================
+db.things.find( { x : 4 } , { j : 1 } )
